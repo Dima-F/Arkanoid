@@ -57,8 +57,8 @@
 					 
 			/* Menu Screen, Buttons Listeners */ 
 			showMenu();
-			
 		}
+		
 		public function showMenu():void{
 			if(aboutScreen){
 				removeChild(aboutScreen);
