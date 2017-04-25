@@ -3,7 +3,7 @@
 	import flash.display.*;
 	import flash.events.*;
 	
-	public class OverScreen extends MovieClip {
+	public class OverScreen extends Sprite {
 		private var _owner:INavigate;
 		private var playButton:SimpleButton;
 		public function OverScreen(owner:INavigate) {

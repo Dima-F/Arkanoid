@@ -52,7 +52,6 @@
 		public function Main() {
 			// constructor code
 			/* Add Levels */ 
-					 
 			levels.push(LEVEL_1, LEVEL_2); //we add the levels to the array in order to know how many they are 
 					 
 			/* Menu Screen, Buttons Listeners */ 

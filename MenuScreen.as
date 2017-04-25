@@ -5,7 +5,7 @@
 	import flash.events.*;
 	
 	
-	public class MenuScreen extends MovieClip {
+	public class MenuScreen extends Sprite {
 		private var _owner:INavigate;
 		private var playButton:SimpleButton;
 		private var aboutButton:SimpleButton;
