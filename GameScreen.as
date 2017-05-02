@@ -14,25 +14,47 @@
 		private var bricks: Vector.<Brick> = new Vector.<Brick>();
 		private var ball:Ball;
 		private var paddle:Paddle;
-		
+		private const LEVEL_1:Array = [[0,0,0,0,0,0,0,0], 
+									   [0,0,0,0,0,0,0,0], 
+									   [0,0,0,1,1,0,0,0], 
+									   [0,0,0,1,1,0,0,0], 
+									   [0,1,1,1,1,1,1,0], 
+									   [0,1,1,1,1,1,1,0], 
+									   [0,0,0,1,1,0,0,0], 
+									   [0,0,0,1,1,0,0,0], 
+									   [0,0,0,0,0,0,0,0],]; //this forms a + sign! 
+		 
+		private const LEVEL_2:Array = [[0,0,0,0,0,0,0,0], 
+									   [0,0,0,1,1,0,0,0], 
+									   [0,0,1,0,0,1,0,0], 
+									   [0,0,0,0,0,1,0,0], 
+									   [0,0,0,0,1,0,0,0], 
+									   [0,0,0,1,0,0,0,0], 
+									   [0,0,1,0,0,0,0,0], 
+									   [0,0,1,1,1,1,0,0],]; //this forms a number 2!
+		private var gameEvent: String = ''; //stores events like win, lose, gameover 
+		private var currentLevel: int = 0;
+		private var lives: int = 3;
+		private var levels: Array = []; //stores the levels
 		
 		private var _owner:INavigate;
 		private var _timer:Timer;
 		public function GameScreen(owner:INavigate) {
 			// constructor code
+			levels.push(LEVEL_1, LEVEL_2);
 			_owner=owner;
-			addEventListener(Event.ADDED_TO_STAGE, initializeGame);
+			addEventListener(Event.ADDED_TO_STAGE, initializeGame,false, 0 ,true);
 		}
 		private function initializeGame(e:Event):void {
-			addEventListener(MouseEvent.MOUSE_MOVE, movePaddle);
-			addEventListener(Event.ENTER_FRAME, enterF);
+			addEventListener(MouseEvent.MOUSE_MOVE, movePaddle,false, 0, true);
+			addEventListener(Event.ENTER_FRAME, enterF, false, 0 ,true);
 			ball = new Ball();
 			ball.x=stage.stageWidth/2;
 			ball.y=stage.stageHeight/2;
 			addChild(ball);
 			paddle=new Paddle();
-			paddle.x=200;
-			paddle.y=400;
+			paddle.x=stage.stageWidth/2-paddle.width/2;
+			paddle.y=stage.stageHeight*0.9;
 			addChild(paddle);
 			createBricks();
 		}

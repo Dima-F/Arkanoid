@@ -14,7 +14,7 @@
 			backButton.y=200;
 			addChild(backButton);
 			
-			backButton.addEventListener(MouseEvent.CLICK, backHandler);
+			backButton.addEventListener(MouseEvent.CLICK, backHandler,false,0,true);
 		}
 		private function backHandler(e:MouseEvent):void{
 			_owner.showMenu();

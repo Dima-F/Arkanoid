@@ -21,8 +21,8 @@
 			aboutButton.y=260;
 			addChild(aboutButton);
 			
-			playButton.addEventListener(MouseEvent.CLICK,playHandler);
-			aboutButton.addEventListener(MouseEvent.CLICK, aboutHandler);
+			playButton.addEventListener(MouseEvent.CLICK,playHandler, false, 0, true);
+			aboutButton.addEventListener(MouseEvent.CLICK, aboutHandler, false, 0, true);
 		}
 		private function aboutHandler(e:MouseEvent):void{
 			_owner.showAbout();

@@ -14,7 +14,7 @@
 			playButton.y=200;
 			addChild(playButton);
 			
-			playButton.addEventListener(MouseEvent.CLICK,playHandler);
+			playButton.addEventListener(MouseEvent.CLICK,playHandler,false, 0 ,true);
 		}
 		private function playHandler(e:MouseEvent):void{
 			_owner.showGame();
