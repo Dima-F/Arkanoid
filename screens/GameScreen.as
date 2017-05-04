@@ -1,11 +1,11 @@
-﻿package  {
+﻿package screens  {
 	
 	import flash.display.*;
 	import flash.events.*;
 	import flash.utils.*;
 	
 	
-	public class GameScreen extends MovieClip {
+	public class GameScreen extends BasicScreen {
 		private var xstep = 50;
 		private var ystep = 50;
 		private var ballX = 3;
@@ -36,13 +36,11 @@
 		private var currentLevel: int = 0;
 		private var lives: int = 3;
 		private var levels: Array = []; //stores the levels
-		
-		private var _owner:INavigate;
 		private var _timer:Timer;
 		public function GameScreen(owner:INavigate) {
 			// constructor code
 			levels.push(LEVEL_1, LEVEL_2);
-			_owner=owner;
+			super(owner);
 			addEventListener(Event.ADDED_TO_STAGE, initializeGame,false, 0 ,true);
 		}
 		private function initializeGame(e:Event):void {
@@ -84,8 +82,11 @@
 					removeChild(bricks[i]);
 					bricks.splice(i, 1);
 					ballY *= -1;
-
 				}
+			}
+			//exit game if ball is out
+			if(ball.y>stage.stageHeight){
+				_owner.showMenu();
 			}
 		}
 		private function createBricks(): void {

@@ -1,19 +1,20 @@
-﻿package  {
+﻿package screens  {
 	
 	import flash.display.*;
-	import flash.events.MouseEvent;
+	import flash.events.*;
+	import flash.text.*;
+	import labels.*;
 	
-	public class AboutScreen extends Sprite {
-		private var _owner:INavigate;
+	public class AboutScreen extends BasicScreen {
 		private var backButton:SimpleButton;
 		public function AboutScreen(owner:INavigate) {
-			// constructor code
-			_owner=owner;
-			backButton=new BackButton();
+			super(owner);
+			addChild(new Label('About screen',20));
+			
+			backButton = new Btn('back');
 			backButton.x=120;
 			backButton.y=200;
 			addChild(backButton);
-			
 			backButton.addEventListener(MouseEvent.CLICK, backHandler,false,0,true);
 		}
 		private function backHandler(e:MouseEvent):void{
