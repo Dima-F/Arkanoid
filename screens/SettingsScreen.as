@@ -3,6 +3,7 @@
 	import flash.text.*;
 	import flash.events.*;
 	import labels.*;
+	import buttons.*;
 
 	public class SettingsScreen extends BasicScreen {
 
@@ -10,7 +11,7 @@
 			super(owner);
 			addChild(new Label('Settings screen',20));
 			
-			var backButton = new Btn('back');
+			var backButton = new RichButton('back');
 			backButton.x=120;
 			backButton.y=200;
 			addChild(backButton);

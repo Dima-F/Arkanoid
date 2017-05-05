@@ -43,6 +43,18 @@
 			super(owner);
 			addEventListener(Event.ADDED_TO_STAGE, initializeGame,false, 0 ,true);
 		}
+		public override function dispose():void{
+			removeChild(ball);
+			ball=null;
+			removeChild(paddle);
+			paddle=null;
+			for (var i = 0; i < bricks.length; i++) {
+				removeChild(bricks[i]);
+				bricks[i]=null;
+			}
+			bricks=null;
+			removeEventListener(Event.ENTER_FRAME,enterF);
+		}
 		private function initializeGame(e:Event):void {
 			addEventListener(MouseEvent.MOUSE_MOVE, movePaddle,false, 0, true);
 			addEventListener(Event.ENTER_FRAME, enterF, false, 0 ,true);

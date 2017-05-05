@@ -7,7 +7,7 @@
 			// constructor code
 			//creating format
 			var format:TextFormat = new TextFormat();
-			format.font = 'arial';
+			format.font = 'Verdana';
 			format.bold = true;
 			format.size = size;
 			//creating textField
