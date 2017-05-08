@@ -3,6 +3,7 @@
 	import flash.display.*;
 	import flash.events.*;
 	import flash.utils.*;
+	import flash.filters.DropShadowFilter;
 	
 	
 	public class GameScreen extends BasicScreen {
@@ -60,11 +61,12 @@
 			addEventListener(Event.ENTER_FRAME, enterF, false, 0 ,true);
 			ball = new Ball();
 			ball.x=stage.stageWidth/2;
-			ball.y=stage.stageHeight/2;
+			ball.y=stage.stageHeight/1.5;
 			addChild(ball);
 			paddle=new Paddle();
 			paddle.x=stage.stageWidth/2-paddle.width/2;
 			paddle.y=stage.stageHeight*0.9;
+			applyShadow(paddle);
 			addChild(paddle);
 			createBricks();
 		}
@@ -106,6 +108,7 @@
 				var nova: Sprite = new Brick();
 				nova.x = xstep;
 				nova.y = ystep;
+				applyShadow(nova);
 				bricks.unshift(nova);
 				addChild(nova);
 				xstep += 55;
@@ -114,6 +117,14 @@
 					xstep = 50;
 				}
 			}
+		}
+		private function applyShadow(target:Sprite):void {
+			var ds:DropShadowFilter = new DropShadowFilter();
+			ds.distance=5;
+			ds.blurX=10;
+			ds.blurY=10;
+			ds.alpha=0.6;
+			target.filters=[ds];
 		}
 	}
 	
