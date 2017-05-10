@@ -8,12 +8,10 @@
 	public class SettingsScreen extends BasicScreen {
 
 		public function SettingsScreen(owner:INavigate) {
-			super(owner);
-			addChild(new Label('Settings screen',20));
-			
-			var backButton = new RichButton('back');
+			super(owner,"Settings");
+			var backButton = new RichButton('Return');
 			backButton.x=120;
-			backButton.y=200;
+			backButton.y=400;
 			addChild(backButton);
 			backButton.addEventListener(MouseEvent.CLICK, backHandler,false,0,true);
 		}

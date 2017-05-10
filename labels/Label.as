@@ -3,16 +3,17 @@
 	
 	public class Label extends TextField {
 
-		public function Label(title:String, size:uint) {
+		public function Label(title:String, size:uint, color:uint) {
 			// constructor code
 			//creating format
 			var format:TextFormat = new TextFormat();
-			format.font = 'Verdana';
+			embedFonts=true;
+			format.font='Kristen ITC';
 			format.bold = true;
 			format.size = size;
+			format.color=color;
 			//creating textField
 			autoSize = TextFieldAutoSize.LEFT;
-			type = TextFieldType.INPUT;
 			selectable=false;
 			text = title;
 			setTextFormat(format);

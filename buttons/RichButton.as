@@ -2,6 +2,7 @@
 	
 	import flash.display.*;
 	import flash.text.*;
+	import flash.filters.*;
 	
 	public class RichButton extends Sprite {
 		private var _w:Number;
@@ -28,6 +29,10 @@
 			btn.width=_w;
 			btn.height=_h;
 			btn.name=_txt;
+			var ds:DropShadowFilter = new DropShadowFilter();
+			ds.distance=5;
+			ds.alpha=0.6;
+			btn.filters=[ds];
 			return btn;
 		}
 		
@@ -42,6 +47,8 @@
 			format.size = _fSize;
 			format.bold = true;
 			format.align = TextFormatAlign.CENTER
+			txt.embedFonts=true;
+			format.font='Kristen ITC';
 
 			txt.defaultTextFormat = format;
 			txt.text = _txt;

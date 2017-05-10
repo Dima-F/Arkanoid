@@ -41,7 +41,7 @@
 		public function GameScreen(owner:INavigate) {
 			// constructor code
 			levels.push(LEVEL_1, LEVEL_2);
-			super(owner);
+			super(owner,"");
 			addEventListener(Event.ADDED_TO_STAGE, initializeGame,false, 0 ,true);
 		}
 		public override function dispose():void{
