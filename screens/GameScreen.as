@@ -4,6 +4,7 @@
 	import flash.events.*;
 	import flash.utils.*;
 	import flash.filters.DropShadowFilter;
+	import sounds.*;
 	
 	
 	public class GameScreen extends BasicScreen {
@@ -81,18 +82,23 @@
 			
 			if (ball.hitTestObject(paddle)) {
 				ballY *= -1;
+				SoundManager.play("Puddle");
 			}
 			if (ball.x + radius >= stage.stageWidth) {
 				ballX *= -1;
+				SoundManager.play("Puddle");
 			}
 			if (ball.y - radius <= 0) {
 				ballY *= -1;
+				SoundManager.play("Puddle");
 			}
 			if (ball.x - radius <= 0) {
 				ballX *= -1;
+				SoundManager.play("Puddle");
 			}
 			for (var i = 0; i < bricks.length; i++) {
 				if (ball.hitTestObject(bricks[i])) {
+					SoundManager.play("Pop");
 					removeChild(bricks[i]);
 					bricks.splice(i, 1);
 					ballY *= -1;

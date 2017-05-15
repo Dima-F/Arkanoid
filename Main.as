@@ -1,9 +1,10 @@
 ﻿package {
-	import screens.*;
 	import flash.display.*;
 	import flash.ui.*;
 	import flash.events.*;
 	import flash.text.*;
+	import screens.*;
+	import sounds.*;
 
 
 	public class Main extends MovieClip implements INavigate {
@@ -14,7 +15,9 @@
 		private var settingsScreen: BasicScreen;
 
 		public function Main() {
+			
 			showMenu();
+			SoundManager.initialize();
 		}
 		public function showMenu(): void {
 			if (aboutScreen) {
