@@ -5,9 +5,16 @@
 	import flash.utils.*;
 	import flash.filters.DropShadowFilter;
 	import sounds.*;
+	import core.*;
+	import flash.ui.GameInput;
 	
 	
 	public class GameScreen extends BasicScreen {
+		
+		private var game:Game;
+		
+		
+		
 		private var xstep = 50;
 		private var ystep = 50;
 		private var ballX = 3;
@@ -41,10 +48,21 @@
 		private var _timer:Timer;
 		public function GameScreen(owner:INavigate) {
 			// constructor code
+			game=new Game();
+			game.addEventListener(Game.GAME_OVER, gameOverHandler);
+			
+			
+			
+			
 			levels.push(LEVEL_1, LEVEL_2);
 			super(owner,"");
 			addEventListener(Event.ADDED_TO_STAGE, initializeGame,false, 0 ,true);
 		}
+		
+		private function gameOverHandler(e:Event):void {
+			trace('game finished...');
+		}
+		
 		public override function dispose():void{
 			removeChild(ball);
 			ball=null;
