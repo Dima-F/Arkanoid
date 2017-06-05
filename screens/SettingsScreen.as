@@ -5,7 +5,7 @@
 	import labels.*;
 	import buttons.*;
 
-	public class SettingsScreen extends BasicScreen {
+	public final class SettingsScreen extends BasicScreen {
 
 		public function SettingsScreen(owner:INavigate) {
 			super(owner,"Settings");

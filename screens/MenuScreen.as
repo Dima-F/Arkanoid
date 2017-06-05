@@ -6,12 +6,12 @@
 	import labels.*;
 	import buttons.*;
 
-	public class MenuScreen extends BasicScreen{
+	public final class MenuScreen extends BasicScreen{
 
 		public function MenuScreen(owner: INavigate) {
 			// constructor code
 			super(owner,"Arkanoid");
-			createButtons(["Play", "About", "Settings", "Exit"]);
+			createButtons(["Play", "About", "Settings"]);
 		}
 		
 		private function createButtons(btns: Array): void {

@@ -6,11 +6,10 @@
 	import labels.*;
 	import buttons.*;
 	
-	public class AboutScreen extends BasicScreen {
+	public final class AboutScreen extends BasicScreen {
 		private var backButton:Sprite;
 		public function AboutScreen(owner:INavigate) {
 			super(owner,"About program");
-			
 			backButton = new RichButton('Return');
 			backButton.x=120
 			backButton.y=400;

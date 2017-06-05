@@ -4,14 +4,14 @@
 	import flash.text.TextField;
 	import labels.*;
 	import flash.filters.*;
+	import flash.events.Event;
 	
-	public class BasicScreen extends Sprite implements IDisposable {
+	public class BasicScreen extends Sprite{
 		protected var _owner:INavigate;
 		public function BasicScreen(owner:INavigate,title:String) {
 			_owner=owner;
 			addTitle(title);
 		}
-		public function dispose():void {}
 		private function addTitle(title:String):void{
 			var titleField:TextField = new Label(title,28, 0xFFFF00);
 			titleField.y=75;
