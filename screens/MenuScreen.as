@@ -6,16 +6,16 @@
 	import labels.*;
 	import buttons.*;
 
-	public class MenuScreen extends BasicScreen{
+	public final class MenuScreen extends BasicScreen{
 
 		public function MenuScreen(owner: INavigate) {
 			// constructor code
-			super(owner);
-			createButtons(["Play", "About", "Settings", "Exit"]);
-			addChild(new Label('Welcome to Arkanoid',20));
+			super(owner,"Arkanoid");
+			createButtons(["Play", "About", "Settings"]);
 		}
 		
 		private function createButtons(btns: Array): void {
+			
 			for (var i: Number = 0; i < btns.length; i++) {
 				var btn: Sprite = new RichButton(btns[i]);
 				btn.x = 20 + i * 100;
