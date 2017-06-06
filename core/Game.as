@@ -3,14 +3,17 @@
 	import flash.utils.*;
 	import flash.display.*;
 	import flash.filters.DropShadowFilter;
-	import sounds.*;
 	import flash.ui.Keyboard;
 	import flash.geom.Point;
+	import sounds.*;
 
 	public final class Game extends MovieClip {
 		public static const GAME_OVER: String = "gameOver";
+		public static const LIVES_DOWN: String = "livesDown";
+		//public static const LIVES_UP: String = "livesUp";
 		private const _WIDTH: Number = 320;
 		private const _HEIGHT: Number = 400;
+		private var started:Boolean = false;
 		private var rightPressed: Boolean = false;
 		private var leftPressed: Boolean = false;
 		private var xstep = 20;
@@ -20,7 +23,6 @@
 		private var bat: Bat;
 		private var level:Level = new Level();
 		
-		//private var gameEvent: String = ''; //stores events like win, lose, gameover 
 		private var lives: int = 3;
 
 		public function Game(): void {
@@ -29,8 +31,8 @@
 
 		private function initializeGame(e: Event): void {
 			stage.addEventListener(Event.ENTER_FRAME, gameLoop, false, 0, true);
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
-			stage.addEventListener(KeyboardEvent.KEY_UP, keyUpHandler);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler, false, 0, true);
+			stage.addEventListener(KeyboardEvent.KEY_UP, keyUpHandler, false, 0, true);
 			ball = new Ball(new Point(_WIDTH / 2,_HEIGHT / 1.5));
 			applyShadow(ball);
 			addChild(ball);
@@ -41,10 +43,25 @@
 			stage.focus=this;
 		}
 		
+		private function livesDown():void {
+			lives--;
+			if(lives>0){
+				restartRound();
+				dispatchEvent(new Event(Game.LIVES_DOWN));
+			} else {
+				dispatchEvent(new Event(Game.GAME_OVER));
+			}
+		}
+		
+		private function toggleGame():void {
+			started=!started;
+		}
+		
 		private function restartRound(){
 			ball.x=_WIDTH / 2;
 			ball.y=_HEIGHT / 1.5;
 			ball.normalize();
+			toggleGame();
 		}
 		
 		private function keyDownHandler(e: KeyboardEvent): void {
@@ -52,6 +69,8 @@
 				rightPressed = true;
 			} else if (e.keyCode == Keyboard.LEFT) {
 				leftPressed = true;
+			} else if(e.keyCode == Keyboard.SPACE){
+				toggleGame();
 			}
 		}
 
@@ -77,7 +96,6 @@
 		}
 
 		private function gameLoop(e: Event): void {
-			if (lives > 0) {
 				if (rightPressed) {
 					bat.moveR();
 					if (bat.x >= _WIDTH - bat.width) {
@@ -92,8 +110,10 @@
 						bat.x = 0;
 					}
 				}
-				ball.move();
-
+				if(started){
+					ball.move();
+				}
+				
 				if (ball.hitTestObject(bat)) {
 					ball.invertY();
 					SoundManager.play("Puddle");
@@ -117,29 +137,33 @@
 						if(!bricks[i].hasPower()){
 							removeChild(bricks[i]);
 							bricks.splice(i, 1);
+							if(bricks.length==0){
+								if(level.next()){
+									createBricks();
+									restartRound();
+								} else {
+									dispatchEvent(new Event(Game.GAME_OVER));
+								}
+							}
 						}
 						ball.invertY();
 					}
 				}
 				//exit game if ball is out
 				if (ball.y > _HEIGHT) {
-					lives--;
-					restartRound();
+					livesDown();
 				}
-			} else {
-				dispatchEvent(new Event(Game.GAME_OVER));
-			}
 
 		}
 
 		private function createBricks(): void {
 			var levelArray:Array = level.getCurrent();
 			for(var i=0;i<levelArray.length;i++){
-				for(var j=0; j<levelArray[j].length;j++){
+				for(var j=0;j<levelArray[i].length;j++){
 					if(levelArray[i][j]!==0){
 						var nova: Sprite = new Brick();
-						nova.x = (i*45)+20;
-						nova.y = (j*25)+20;
+						nova.x = (j*45)+25;
+						nova.y = (i*25)+25;
 						applyShadow(nova);
 						bricks.unshift(nova);
 						addChild(nova);
