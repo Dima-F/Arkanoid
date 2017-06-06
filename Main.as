@@ -13,7 +13,7 @@
 		private var aboutScreen: BasicScreen;
 		private var gameScreen: BasicScreen;
 		private var settingsScreen: BasicScreen;
-
+		
 		public function Main() {
 			showMenu();
 			SoundManager.initialize();

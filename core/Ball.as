@@ -9,8 +9,8 @@
 		private var speedY:int;
 		public function Ball(startPoint:Point) {
 			// constructor code
-			this.speedX=1;
-			this.speedY=1;
+			this.speedX=5;
+			this.speedY=5;
 			this.x=startPoint.x;
 			this.y=startPoint.y;
 		}
@@ -23,6 +23,10 @@
 		}
 		public function invertY():void{
 			this.speedY*=-1;
+		}
+		public function normalize():void{
+			this.speedX=5;
+			this.speedY=5;
 		}
 	}
 	

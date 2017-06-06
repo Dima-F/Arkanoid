@@ -9,7 +9,7 @@
 		
 		public function Bat(startPoint:Point) {
 			// constructor code
-			speed=5;
+			speed=8;
 			this.x = startPoint.x-this.width/2;
 			this.y = startPoint.y;
 		}

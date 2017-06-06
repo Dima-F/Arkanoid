@@ -18,35 +18,12 @@
 		private var bricks: Vector.<Brick> = new Vector.<Brick>();
 		private var ball: Ball;
 		private var bat: Bat;
-		private const LEVEL_1: Array = [
-			[0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 1, 1, 0, 0, 0],
-			[0, 0, 0, 1, 1, 0, 0, 0],
-			[0, 1, 1, 1, 1, 1, 1, 0],
-			[0, 1, 1, 1, 1, 1, 1, 0],
-			[0, 0, 0, 1, 1, 0, 0, 0],
-			[0, 0, 0, 1, 1, 0, 0, 0],
-			[0, 0, 0, 0, 0, 0, 0, 0],
-		];
-
-		private const LEVEL_2: Array = [
-			[0, 0, 0, 0, 0, 0, 0, 0],
-			[0, 0, 0, 1, 1, 0, 0, 0],
-			[0, 0, 1, 0, 0, 1, 0, 0],
-			[0, 0, 0, 0, 0, 1, 0, 0],
-			[0, 0, 0, 0, 1, 0, 0, 0],
-			[0, 0, 0, 1, 0, 0, 0, 0],
-			[0, 0, 1, 0, 0, 0, 0, 0],
-			[0, 0, 1, 1, 1, 1, 0, 0],
-		]; //this forms a number 2!
-		private var gameEvent: String = ''; //stores events like win, lose, gameover 
-		private var currentLevel: int = 0;
+		private var level:Level = new Level();
+		
+		//private var gameEvent: String = ''; //stores events like win, lose, gameover 
 		private var lives: int = 3;
-		private var levels: Array = []; //stores the levels
 
 		public function Game(): void {
-			//levels.push(LEVEL_1, LEVEL_2);
 			addEventListener(Event.ADDED_TO_STAGE, initializeGame, false, 0, true);
 		}
 
@@ -63,7 +40,13 @@
 			createBricks();
 			stage.focus=this;
 		}
-
+		
+		private function restartRound(){
+			ball.x=_WIDTH / 2;
+			ball.y=_HEIGHT / 1.5;
+			ball.normalize();
+		}
+		
 		private function keyDownHandler(e: KeyboardEvent): void {
 			if (e.keyCode == Keyboard.RIGHT) {
 				rightPressed = true;
@@ -103,6 +86,7 @@
 				}
 
 				if (leftPressed) {
+					bat.width+=
 					bat.moveL();
 					if (bat.x <= 0) {
 						bat.x = 0;
@@ -129,14 +113,18 @@
 				for (var i = 0; i < bricks.length; i++) {
 					if (ball.hitTestObject(bricks[i])) {
 						SoundManager.play("Pop");
-						removeChild(bricks[i]);
-						bricks.splice(i, 1);
+						bricks[i].hit();
+						if(!bricks[i].hasPower()){
+							removeChild(bricks[i]);
+							bricks.splice(i, 1);
+						}
 						ball.invertY();
 					}
 				}
 				//exit game if ball is out
 				if (ball.y > _HEIGHT) {
 					lives--;
+					restartRound();
 				}
 			} else {
 				dispatchEvent(new Event(Game.GAME_OVER));
@@ -145,17 +133,17 @@
 		}
 
 		private function createBricks(): void {
-			for (var i = 1; i < 21; i++) {
-				var nova: Sprite = new Brick();
-				nova.x = xstep;
-				nova.y = ystep;
-				applyShadow(nova);
-				bricks.unshift(nova);
-				addChild(nova);
-				xstep += 55;
-				if (i % 5 == 0) {
-					ystep += 50;
-					xstep = 20;
+			var levelArray:Array = level.getCurrent();
+			for(var i=0;i<levelArray.length;i++){
+				for(var j=0; j<levelArray[j].length;j++){
+					if(levelArray[i][j]!==0){
+						var nova: Sprite = new Brick();
+						nova.x = (i*45)+20;
+						nova.y = (j*25)+20;
+						applyShadow(nova);
+						bricks.unshift(nova);
+						addChild(nova);
+					}
 				}
 			}
 		}
