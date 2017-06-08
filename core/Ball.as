@@ -25,9 +25,13 @@
 			this.speedY*=-1;
 		}
 		public function normalize():void{
-			this.speedX=5;
-			this.speedY=5;
+			this.speedX=Math.abs(this.speedX);
+			this.speedY=Math.abs(this.speedY);
 		}
-	}
+		public function moreSpeed():void {
+			this.speedX*=3;
+			this.speedY*=3;
+		}
+	} 
 	
 }

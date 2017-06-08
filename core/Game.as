@@ -2,7 +2,6 @@
 	import flash.events.*;
 	import flash.utils.*;
 	import flash.display.*;
-	import flash.filters.DropShadowFilter;
 	import flash.ui.Keyboard;
 	import flash.geom.Point;
 	import sounds.*;
@@ -34,10 +33,10 @@
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler, false, 0, true);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyUpHandler, false, 0, true);
 			ball = new Ball(new Point(_WIDTH / 2,_HEIGHT / 1.5));
-			applyShadow(ball);
+			Effects.applyShadow(ball);
 			addChild(ball);
 			bat = new Bat(new Point(_WIDTH / 2,_HEIGHT * 0.9));
-			applyShadow(bat);
+			Effects.applyShadow(bat);
 			addChild(bat);
 			createBricks();
 			stage.focus=this;
@@ -93,6 +92,8 @@
 			}
 			bricks = null;
 			stage.removeEventListener(Event.ENTER_FRAME, gameLoop);
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyDownHandler);
+			stage.removeEventListener(KeyboardEvent.KEY_UP, keyUpHandler);
 		}
 
 		private function gameLoop(e: Event): void {
@@ -101,9 +102,7 @@
 					if (bat.x >= _WIDTH - bat.width) {
 						bat.x = _WIDTH - bat.width;
 					}
-				}
-
-				if (leftPressed) {
+				} else if (leftPressed) {
 					bat.width+=
 					bat.moveL();
 					if (bat.x <= 0) {
@@ -139,17 +138,21 @@
 							bricks.splice(i, 1);
 							if(bricks.length==0){
 								if(level.next()){
+									bat.moreWidth();
+									ball.moreSpeed();
 									createBricks();
 									restartRound();
 								} else {
 									dispatchEvent(new Event(Game.GAME_OVER));
+									return;
 								}
 							}
 						}
 						ball.invertY();
 					}
 				}
-				//exit game if ball is out
+				
+				//ball is out
 				if (ball.y > _HEIGHT) {
 					livesDown();
 				}
@@ -164,21 +167,12 @@
 						var nova: Sprite = new Brick();
 						nova.x = (j*45)+25;
 						nova.y = (i*25)+25;
-						applyShadow(nova);
+						Effects.applyShadow(nova);
 						bricks.unshift(nova);
 						addChild(nova);
 					}
 				}
 			}
-		}
-
-		private function applyShadow(target: Sprite): void {
-			var ds: DropShadowFilter = new DropShadowFilter();
-			ds.distance = 5;
-			ds.blurX = 10;
-			ds.blurY = 10;
-			ds.alpha = 0.6;
-			target.filters = [ds];
 		}
 	}
 }
