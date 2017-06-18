@@ -4,7 +4,7 @@
 	import flash.errors.IllegalOperationError;
 
 	public class Ball extends MovieClip {
-		public static const BALL_OUT: String = "ballOut";
+		
 		protected var speedX: int;
 		protected var speedY: int;
 		protected var maxWidth: int;

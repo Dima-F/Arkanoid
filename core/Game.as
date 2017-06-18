@@ -7,12 +7,16 @@
 	import flash.geom.Rectangle;
 	import sounds.*;
 	import core.balls.*;
+	import events.*;
 
 	public final class Game extends MovieClip {
 		public static const GAME_OVER: String = "gameOver";
 		public static const LIVES_DOWN: String = "livesDown";
+		public static const BALL_OUT: String = "ballOut";
+		
 		private const GAME_AREA: Rectangle = new Rectangle(0,0,320,400);
 		private var lives: int = 3;
+		private var points:int = 0;
 		private var started: Boolean = false;
 		private var xstep = 20;
 		private var ystep = 20;
@@ -29,8 +33,8 @@
 		}
 
 		private function initializeGame(e: Event): void {
-			stage.addEventListener(Event.ENTER_FRAME, gameLoop, false, 0, true);
-			addEventListener(Ball.BALL_OUT,livesDown,false, 0, true);
+			addEventListener(Event.ENTER_FRAME, gameLoop, false, 0, true);
+			addEventListener(Game.BALL_OUT,livesDown,false, 0, true);
 			ball = new FastBall(GAME_AREA.width,GAME_AREA.height);
 			ball.setLoc(GAME_AREA.width/2, GAME_AREA.height / 1.5);
 			ball.normalize();
@@ -65,15 +69,15 @@
 		public function clear(): void {
 			removeChild(ball);
 			ball=null;
-			removeChild(bat);
 			bat.clear();
+			removeChild(bat);
 			bat = null;
 			for (var i = 0; i < bricks.length; i++) {
 				removeChild(bricks[i]);
 				bricks[i] = null;
 			}
 			bricks = null;
-			stage.removeEventListener(Event.ENTER_FRAME, gameLoop);
+			removeEventListener(Event.ENTER_FRAME, gameLoop);
 		}
 
 		private function gameLoop(e: Event): void {
@@ -96,7 +100,7 @@
 			}
 			//ball is out
 			if (ball.y > GAME_AREA.height) {
-				dispatchEvent(new Event(Ball.BALL_OUT, true, false));
+				dispatchEvent(new Event(Game.BALL_OUT, true, false));
 			}
 			for (var i = 0; i < bricks.length; i++) {
 				if (ball.hitTestObject(bricks[i])) {
@@ -105,6 +109,7 @@
 					if (!bricks[i].hasPower()) {
 						removeChild(bricks[i]);
 						bricks.splice(i, 1);
+						increasePoints();
 						if (bricks.length == 0) {
 							if (level.next()) {
 								bat.moreWidth();
@@ -120,6 +125,10 @@
 					ball.invertY();
 				}
 			}
+		}
+		private function increasePoints():void{
+			this.points++;
+			dispatchEvent(new Event(Game.POINTS_CHANGED));
 		}
 
 		private function createBricks(): void {
@@ -138,4 +147,6 @@
 			}
 		}
 	}
+
+	
 }

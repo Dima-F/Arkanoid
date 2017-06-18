@@ -10,7 +10,6 @@
 			// constructor code
 			gotoAndStop("Blue Brick Normal");
 			power=2;
-			
 		}
 		public function hit():void {
 			power--;
