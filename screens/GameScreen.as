@@ -4,7 +4,7 @@
 	import flash.events.*;
 	import flash.utils.*;
 	import flash.filters.DropShadowFilter;
-	import sounds.*;
+
 	import core.*;
 	import labels.Label;
 	import events.*;
@@ -24,7 +24,7 @@
 			//subscribing for events...
 			game.addEventListener(Game.GAME_OVER, disposeGame, false, 0, true);
 			game.addEventListener(Game.LIVES_DOWN, removeStar, false, 0, true);
-			game.addEventListener(Game.POINTS_CHANGED, updatePoinsLabel, false, 0, true);
+			game.addEventListener(PointsEvent.POINTS_CHANGED, updatePoinsLabel, false, 0, true);
 			//star init...
 			starClip = new Star(10,420);
 			addChild(starClip);
@@ -43,8 +43,8 @@
 		private function removeStar(e:Event):void {
 			starClip.downStar();
 		}
-		private function updatePoinsLabel(e:Event):void{
-			pointsField.text="I";
+		private function updatePoinsLabel(e:PointsEvent):void{
+			pointsField.text=String(e.val);
 			pointsField.update();
 		}
 

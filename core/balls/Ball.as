@@ -16,6 +16,7 @@
 			this.maxWidth = maxWidth;
 			this.maxHeight = maxHeight;
 			this.arm();
+			this.drawBall();
 		}
 		
 		public function isMoving():Boolean {
@@ -34,8 +35,7 @@
 
 		public function arm(): void {
 			// Устанавливает скорость мяча по умолчанию (5 пикселов в кадр)
-			this.speedX = 5;
-			this.speedY = 5;
+			throw new IllegalOperationError("Abstract method drawBall should be overriden!");
 		}
 		
 		public function pause():void {
@@ -64,7 +64,6 @@
 		public function doMove(): void {
 			this.x += speedX;
 			this.y += speedY;
-			
 		}
 
 		

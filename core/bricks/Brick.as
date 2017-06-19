@@ -1,22 +1,24 @@
-﻿package core  {
+﻿package core.bricks  {
 	
 	import flash.display.MovieClip;
-	
+	import flash.errors.IllegalOperationError;
 	
 	public class Brick extends MovieClip {
 		
 		protected var power:int;
 		public function Brick() {
 			// constructor code
-			gotoAndStop("Blue Brick Normal");
-			power=2;
+			reDraw();
 		}
 		public function hit():void {
 			power--;
-			gotoAndStop("Blue Brick Cracked");
+			reDraw();
 		}
 		public function hasPower():Boolean {
 			return power>0;
+		}
+		protected function reDraw():void{
+			throw new IllegalOperationError();
 		}
 	}
 	
